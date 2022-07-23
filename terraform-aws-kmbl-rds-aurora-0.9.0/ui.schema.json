@@ -1,0 +1,587 @@
+{
+    "vars": [
+      {
+        "section": "Provider Configuration",
+        "sectionDec": "Provider Configuration",
+        "expand": true,
+        "type": "input_block",
+        "id": "Provider Configuration",
+        "fields": [
+          {
+            "component": "input",
+            "label": "Region",
+            "type": "text",
+            "defaultValue": "ap-south-1",
+            "id": "region",
+            "hint": "Provide the region where RDS needs to provisioned",
+            "store": "region",
+            "required": false
+          },
+          {
+            "component": "input",
+            "label": "Assume Role ARN",
+            "type": "text",
+            "defaultValue": "",
+            "id": "assume_role_arn",
+            "hint": "Assume role in which account to create",
+            "store": "assume_role_arn",
+            "required": false
+          },
+          {
+            "component": "object_group",
+            "label": "Extra Tags",
+            "type": "text",
+            "defaultValue": {},
+            "id": "extra_tags",
+            "hint": "Add extra tags to your resource",
+            "store": "extra_tags",
+            "required": false,
+            "fields": {
+              "key": {
+                "component": "input",
+                "label": "Key",
+                "type": "text",
+                "defaultValue": "",
+                "id": "extra_key",
+                "hint": "add key here",
+                "store": "key"
+              },
+              "value": {
+                "component": "input",
+                "label": "Value",
+                "type": "text",
+                "defaultValue": "",
+                "id": "extra_value",
+                "hint": "add value here",
+                "store": "value"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "section": "RDS Configuration",
+        "sectionDec": "Configuring RDS",
+        "expand": true,
+        "type": "input_block",
+        "id": "RDS Configuration",
+        "fields": [
+          {
+            "component": "input",
+            "label": "Name",
+            "type": "text",
+            "defaultValue": "",
+            "id": "name",
+            "hint": "Name given to the RDS creater ",
+            "store": "name",
+            "required": true
+          },
+          {
+            "component": "input",
+            "label": "Database Name",
+            "type": "text",
+            "defaultValue": "",
+            "id": "database_name",
+            "hint": "Name for an automatically created database on cluster creation",
+            "store": "database_name",
+            "required": true
+          },
+          {
+            "component": "input",
+            "label": "Username",
+            "type": "text",
+            "defaultValue": "root",
+            "id": "username",
+            "hint": "Master DB username",
+            "store": "username",
+            "required": false
+          },
+          {
+            "component": "field_group",
+            "header": "Engine Configuration",
+            "id": "Engine Configuration",
+            "fields": [
+              {
+                "component": "singleSelect",
+                "label": "Engine",
+                "type": "select",
+                "defaultValue": "aurora-postgresql",
+                "id": "engine",
+                "hint": "Aurora database engine type, currently aurora, 'aurora-mysql' or 'aurora-postgresql' ",
+                "store": "engine",
+                "required": false,
+                "options": [
+                  {
+                    "value": "aurora-postgresql",
+                    "label": "Aurora-PostgreSQL"
+                  },
+                  {
+                    "value": "aurora",
+                    "label": "Aurora"
+                  },
+                  {
+                    "value": "aurora-mysql",
+                    "label": "Aurora-MySQL"
+                  }
+                ]
+              },
+              {
+                "component": "input",
+                "label": "Engine Version",
+                "type": "text",
+                "defaultValue": 11.9,
+                "id": "engine_version",
+                "hint": "Aurora database engine version",
+                "store": "engine_version",
+                "required": false
+              }
+            ]
+          },
+          {
+            "component": "input",
+            "label": "Instance Type",
+            "type": "text",
+            "defaultValue": "db.t3.small",
+            "id": "instance_type",
+            "hint": "Instance type to use for RDS",
+            "store": "instance_type",
+            "required": false
+          },
+          {
+            "component": "input",
+            "label": "DB Family",
+            "type": "text",
+            "defaultValue": "aurora-postgresql11",
+            "id": "db_family",
+            "hint": "DB family that this DB parameter group will apply to",
+            "store": "db_family",
+            "required": false
+          }
+        ]
+      },
+      {
+        "section": "Networking",
+        "sectionDec": "Configuring Networking",
+        "expand": true,
+        "type": "input_block",
+        "id": "Networking",
+        "fields": [
+          {
+            "component": "input",
+            "label": "VPC ID",
+            "type": "text",
+            "defaultValue": "",
+            "id": "vpc_id",
+            "hint": "VPC id in which DB needs to launch",
+            "store": "vpc_id",
+            "required": true
+          },
+          {
+            "component": "multiInput",
+            "label": "Subnets IDs",
+            "type": "text",
+            "defaultValue": [],
+            "id": "subnets_ids",
+            "hint": "List of subnet IDs used by database subnet group created",
+            "store": "subnets_ids",
+            "required": false
+          },
+          {
+            "component": "toggle",
+            "label": "Create Security Group",
+            "type": "button",
+            "defaultValue": true,
+            "id": "create_security_group",
+            "hint": "Whether to create security group for RDS cluster",
+            "store": "create_security_group",
+            "required": false,
+            "options": [
+              {
+                "label": "False",
+                "value": false
+              },
+              {
+                "label": "True",
+                "value": true
+              }
+            ]
+          },
+          {
+            "component": "multiInput",
+            "label": "Allowed CIDR Blocks",
+            "type": "text",
+            "defaultValue": [],
+            "id": "allowed_cidr_blocks",
+            "hint": "A list of CIDR blocks which are allowed to access the database",
+            "store": "allowed_cidr_blocks",
+            "required": false
+          },
+          {
+            "component": "multiInput",
+            "label": "Allowed Security Groups",
+            "type": "text",
+            "defaultValue": [],
+            "id": "allowed_security_groups",
+            "hint": "A list of Security Group ID's to allow access to",
+            "store": "allowed_security_groups",
+            "required": false
+          }
+        ]
+      },
+      {
+        "section": "Tags",
+        "sectionDec": "Adding Tags",
+        "expand": true,
+        "type": "input_block",
+        "id": "Tags",
+        "fields": [
+          {
+            "component": "input",
+            "label": "Project",
+            "type": "text",
+            "defaultValue": "",
+            "id": "project",
+            "hint": "Project name where the RDS is provisioned",
+            "store": "project",
+            "required": true
+          },
+          {
+            "component": "input",
+            "label": "Environment Class",
+            "type": "text",
+            "defaultValue": "",
+            "id": "environment_class",
+            "hint": "Environment of the RDS cluster is bootstraped (e.g dev, uat, prod)",
+            "store": "environment_class",
+            "required": true
+          }
+        ]
+      },
+      {
+        "section": "Authentication",
+        "sectionDec": "Configuring Authentication",
+        "expand": true,
+        "type": "input_block",
+        "id": "Authentication",
+        "fields": [
+          {
+            "component": "toggle",
+            "label": "IAM Database Authentication Enabled",
+            "type": "button",
+            "defaultValue": false,
+            "id": "iam_database_authentication_enabled",
+            "hint": "Use an authentication token . An authentication token is a unique string of characters that Amazon RDS generates on request.",
+            "store": "iam_database_authentication_enabled",
+            "required": false,
+            "options": [
+              {
+                "label": "False",
+                "value": false
+              },
+              {
+                "label": "True",
+                "value": true
+              }
+            ]
+          },
+          {
+            "component": "toggle",
+            "label": "IAM Role Use Name Prefix",
+            "type": "button",
+            "defaultValue": false,
+            "id": "iam_role_use_name_prefix",
+            "hint": "Whether to use name provided in 'name' or create a unique name for the iam role beginning with 'name'",
+            "store": "iam_role_use_name_prefix",
+            "required": false,
+            "options": [
+              {
+                "label": "False",
+                "value": false
+              },
+              {
+                "label": "True",
+                "value": true
+              }
+            ]
+          },
+          {
+            "component": "input",
+            "label": "IAM Role Max Session Duration",
+            "type": "number",
+            "defaultValue": 3600,
+            "id": "iam_role_max_session_duration",
+            "hint": "Maximum session duration (in seconds) that you want to set for the role",
+            "store": "iam_role_max_session_duration",
+            "required": false
+          }
+        ]
+      },
+      {
+        "section": "Encryption",
+        "sectionDec": "Configuring Encryption",
+        "expand": true,
+        "type": "input_block",
+        "id": "Encryption",
+        "fields": [
+          {
+            "component": "toggle",
+            "label": "Storage Encrypted",
+            "type": "button",
+            "defaultValue": true,
+            "id": "storage_encrypted",
+            "hint": "Specifies whether the underlying storage layer should be encrypted",
+            "store": "storage_encrypted",
+            "required": false,
+            "options": [
+              {
+                "label": "False",
+                "value": false
+              },
+              {
+                "label": "True",
+                "value": true
+              }
+            ]
+          },
+          {
+            "component": "input",
+            "label": "KMS Key ID",
+            "type": "text",
+            "defaultValue": "",
+            "id": "kms_key_id",
+            "hint": "Specify the KMS Key to use for encryption",
+            "store": "kms_key_id",
+            "required": true
+          }
+        ]
+      },
+      {
+        "section": "BackUp & Data Retention Configuration",
+        "sectionDec": "Configuring BackUp & Data Retention",
+        "expand": true,
+        "type": "input_block",
+        "id": "BackUp & Data Retention Configuration",
+        "fields": [
+          {
+            "component": "input",
+            "label": "Backup Retention Period",
+            "type": "number",
+            "defaultValue": 7,
+            "id": "backup_retention_period",
+            "hint": "How long to keep backups for (in days)",
+            "store": "backup_retention_period",
+            "required": false
+          },
+          {
+            "component": "toggle",
+            "label": "Deletion Protection",
+            "type": "button",
+            "defaultValue": false,
+            "id": "deletion_protection",
+            "hint": "If the DB instance should have deletion protection enabled",
+            "store": "deletion_protection",
+            "required": false,
+            "options": [
+              {
+                "label": "False",
+                "value": false
+              },
+              {
+                "label": "True",
+                "value": true
+              }
+            ]
+          },
+          {
+            "component": "toggle",
+            "label": "Skip Final Snapshot",
+            "type": "button",
+            "defaultValue": false,
+            "id": "skip_final_snapshot",
+            "hint": "Determines whether a final DB snapshot is created before the DB cluster is deleted. If true is specified, no DB snapshot is created.",
+            "store": "skip_final_snapshot",
+            "required": false,
+            "options": [
+              {
+                "label": "False",
+                "value": false
+              },
+              {
+                "label": "True",
+                "value": true
+              }
+            ]
+          },
+          {
+            "component": "input",
+            "label": "Preferred Backup Window",
+            "type": "text",
+            "defaultValue": "02:00-03:00",
+            "id": "preferred_backup_window",
+            "hint": "When to perform DB backups",
+            "store": "preferred_backup_window",
+            "required": false
+          }
+        ]
+      },
+      {
+        "section": "Replicas Autoscaling Configuration",
+        "sectionDec": "Configuring Replicas Autoscaling",
+        "expand": true,
+        "type": "input_block",
+        "id": "Replicas Autoscaling Configuration",
+        "fields": [
+          {
+            "component": "toggle",
+            "label": "Replica Scale Enabled",
+            "type": "button",
+            "defaultValue": true,
+            "id": "replica_scale_enabled",
+            "hint": "Whether to enable autoscaling for RDS Aurora read replicas",
+            "store": "replica_scale_enabled",
+            "required": false,
+            "options": [
+              {
+                "label": "False",
+                "value": false
+              },
+              {
+                "label": "True",
+                "value": true
+              }
+            ]
+          },
+          {
+            "component": "input",
+            "label": "Instance Type Replica",
+            "type": "text",
+            "defaultValue": null,
+            "id": "instance_type_replica",
+            "hint": "Instance type to use at replica instance",
+            "store": "instance_type_replica",
+            "required": false
+          },
+          {
+            "component": "input",
+            "label": "Replica Count",
+            "type": "number",
+            "defaultValue": 3,
+            "id": "replica_count",
+            "hint": "Number of reader nodes to create.  If `replica_scale_enable` is `true`, the value of `replica_scale_min` is used instead.",
+            "store": "replica_count",
+            "required": false
+          },
+          {
+            "component": "field_group",
+            "header": "Engine Configuration",
+            "id": "Engine_Configuration",
+            "fields": [
+              {
+                "component": "input",
+                "label": "Replica Scale Min",
+                "type": "number",
+                "defaultValue": 3,
+                "id": "replica_scale_min",
+                "hint": "Minimum number of Replicas for Scalling Policy",
+                "store": "replica_scale_min",
+                "required": false
+              },
+              {
+                "component": "input",
+                "label": "Replica Scale Max",
+                "type": "number",
+                "defaultValue": 5,
+                "id": "replica_scale_max",
+                "hint": "Maximum number of Replicas for Scalling Policy",
+                "store": "replica_scale_max",
+                "required": false
+              }
+            ],
+            "defaultValue": ""
+          }
+        ]
+      },
+      {
+        "section": "Monitoring",
+        "sectionDec": "Configuring Monitoring",
+        "expand": true,
+        "type": "input_block",
+        "id": "Monitoring",
+        "fields": [
+          {
+            "component": "input",
+            "label": "Monitoring Interval",
+            "type": "number",
+            "defaultValue": 60,
+            "id": "monitoring_interval",
+            "hint": "Monitoring Interval",
+            "store": "monitoring_interval",
+            "required": false
+          },
+          {
+            "component": "multiSelect",
+            "label": "Enabled Cloudwatch Logs Exports RDS",
+            "type": "select",
+            "defaultValue": [
+              "postgresql"
+            ],
+            "id": "enabled_cloudwatch_logs_exports_rds",
+            "hint": "List of log types to export to cloudwatch - `audit`, `error`, `general`, `slowquery`, `postgresql`",
+            "store": "enabled_cloudwatch_logs_exports_rds",
+            "required": false,
+            "options": [
+              {
+                "label": "Audit",
+                "value": "audit"
+              },
+              {
+                "label": "Error",
+                "value": "error"
+              },
+              {
+                "label": "General",
+                "value": "general"
+              },
+              {
+                "label": "Slow Query",
+                "value": "slowquery"
+              },
+              {
+                "label": "PostgresSQL",
+                "value": "postgresSQL"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "section": "Maintenance",
+        "sectionDec": "Configuring Maintenance",
+        "expand": true,
+        "type": "input_block",
+        "id": "Maintenance",
+        "fields": [
+          {
+            "component": "toggle",
+            "label": "apply_immediately",
+            "type": "button",
+            "defaultValue": true,
+            "id": "apply_immediately",
+            "hint": "Determines whether or not any DB modifications are applied immediately, or during the maintenance window",
+            "store": "apply_immediately",
+            "required": false,
+            "options": [
+              {
+                "label": "False",
+                "value": false
+              },
+              {
+                "label": "True",
+                "value": true
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
